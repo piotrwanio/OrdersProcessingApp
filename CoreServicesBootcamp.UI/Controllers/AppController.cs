@@ -25,6 +25,13 @@ namespace CoreServicesBootcamp.UI.Controllers
             return View();
         }
 
+        public IActionResult AllOrdersList()
+        {
+            OrderService orderService = new OrderService(_context);
+
+            return View(orderService.GetAllOrders());
+        }
+
         [HttpPost]
         public ActionResult FileLoad(List<IFormFile> files)
         {
@@ -48,7 +55,7 @@ namespace CoreServicesBootcamp.UI.Controllers
                 }
                 fileService.LoadToDb(file);
             }
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

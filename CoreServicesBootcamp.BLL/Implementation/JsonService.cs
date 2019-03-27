@@ -25,8 +25,8 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
         public void LoadToDb(IFormFile file)
         {
-            RequestRepository repository = new RequestRepository(_context);
-            WholeRequestService wholeRequestService = new WholeRequestService(repository);
+            //RequestRepository repository = new RequestRepository(_context);
+            OrderService orderService = new OrderService(_context);
 
             var result = string.Empty;
 
@@ -49,8 +49,13 @@ namespace CoreServicesBootcamp.BLL.Implementation
                     Quantity = int.Parse(rq.Quantity),
                     RequestId = long.Parse(rq.RequestId, CultureInfo.InvariantCulture)
                 };
-                repository.AddRequest(request);
+                _context.Add(request);
+                _context.SaveChanges();
+
             }
+
+            List<Order> orders = orderService.GetAllOrders().Orders;
+
 
             Debug.WriteLine(rqst);
         }

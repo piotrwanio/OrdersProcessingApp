@@ -11,7 +11,7 @@ namespace CoreServicesBootcamp.UnitTests
         [TestMethod]
         public void Can_Load_Requests_JSON()
         {
-            JsonService 
+
         }
 
         [TestMethod]

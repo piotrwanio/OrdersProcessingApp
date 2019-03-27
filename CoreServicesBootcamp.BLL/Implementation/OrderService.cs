@@ -102,17 +102,6 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
             var allFromRepo = _context.Requests.Where(m => true).ToList();
 
-            //var duplicates = (from r in allFromRepo
-            //                  group r by new { r.ClientId, r.RequestId } into results
-            //                  select results.Skip(1)
-            //     ).SelectMany(a => a).ToList();
-
-
-            //foreach (var dup in duplicates)
-            //{
-            //    allFromRepo.Remove(dup);
-            //}
-
             foreach(var req in allFromRepo)
             {
                 var contains = (from r in orders

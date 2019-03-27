@@ -109,6 +109,8 @@ namespace CoreServicesBootcamp.UI.Controllers
             ViewBag.min = min;
             ViewBag.max = max;
 
+            if (ordersDTO.Orders.Count == 0) ViewBag.Message = "Brak zamówień";
+
             return View("OrdersList", ordersDTO);
         }
 
@@ -144,6 +146,8 @@ namespace CoreServicesBootcamp.UI.Controllers
 
             ViewBag.ClientId = clientId;
 
+            if (ordersDTO.Orders.Count == 0) ViewBag.Message = "Brak zamówień";
+
             return View("OrdersList", ordersDTO); 
         }
 
@@ -158,7 +162,21 @@ namespace CoreServicesBootcamp.UI.Controllers
 
             SortList(ordersDTO, sortOrder);
 
+            if (ordersDTO.Orders.Count == 0) ViewBag.Message = "Brak zamówień";
+
+
             return View("OrdersList", ordersDTO);
+        }
+
+        public IActionResult ProductOrdersNumber()
+        {
+            ProductService productService = new ProductService(_context);
+
+            ProductDTO products = productService.GetProductsOrders();
+
+            if (products.ProductOrders.Count == 0) ViewBag.Message = "Brak zamówień";
+
+            return View(products);
         }
 
         public IActionResult FilesLoad()

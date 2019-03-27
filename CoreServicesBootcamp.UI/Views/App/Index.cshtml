@@ -49,8 +49,8 @@
         <a href="@Url.Action("OrdersQuantity","App", new { })" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Ilość zamówień
         </a>
-        <a href="#" class="btn btn-primary btn-large btn-block">
-            <span class="glyphicon glyphicon-print"></span>Ilość po nazwie
+        <a href="@Url.Action("ProductOrdersNumber","App", new { })" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-print"></span>Ilość pozycji zamówień po produktach
         </a>
     </div>
 
@@ -97,13 +97,13 @@ Wartość zamówienia od: <input type="number" id="min"/> do <input type="number
         </button>
     </div>
 </div>
-<div style="margin-top: 10px">
+@*<div style="margin-top: 10px">
     <div class="col-md-12 margin-top-20">
-        <a href="@Url.Action("Deposit","Transaction", new {checkingAccountId = ViewBag.CheckingAccountId })" class="btn btn-primary btn-large btn-block">
-            <span class="glyphicon glyphicon-print"></span>Ilość zamówień pogrupowanych po nazwie
+        <a href="@Url.Action("Index","App", new { })" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-print"></span>Ilość pozycji zamówień pogrupowanych po nazwie
         </a>
     </div>
-</div>
+</div>*@
 
 
 

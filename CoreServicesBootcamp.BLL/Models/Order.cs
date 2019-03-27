@@ -10,7 +10,7 @@ namespace CoreServicesBootcamp.BLL.Models
     {
         public int ClientId { get; set; }
         public long RequestId { get; set; }
-        public double PriceSum { get; set; }
+        public double Amount { get; set; }
         public List<Request> RequestsList { get; set; }
     }
 }

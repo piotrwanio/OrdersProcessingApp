@@ -49,5 +49,55 @@ namespace CoreServicesBootcamp.UnitTests
 
             }
         }
+
+        [TestMethod]
+        public void Can_Get_Client_Orders()
+        {
+            //preparation - create dbcontext options with in-memory db
+            var options = new DbContextOptionsBuilder<RequestContext>()
+               .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+               .Options;
+
+            //adding order to db
+            using (var context = new RequestContext(options))
+            {
+                Request request1 = new Request
+                {
+                    Id = 2,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 1,
+                    Name = "product1"
+                };
+                Request request2 = new Request
+                {
+                    Id = 3,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 2,
+                    Name = "product2"
+                };
+                context.Add(request1);
+                context.Add(request2);
+
+                context.SaveChanges();
+            }
+
+
+            //use context with prepared options to check if order was added
+            using (var context = new RequestContext(options))
+            {
+                var service = new OrderService(context);
+                List<Order> orders = service.GetOrdersByClient(2).Orders;
+
+                //assert - is number of client orders equal 1 
+                Assert.AreEqual(1, orders.Count);
+                //assert - check correct of insert data
+                Assert.AreEqual("product2", orders[0].RequestsList[0].Name);
+
+            }
+        }
     }
 }

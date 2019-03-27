@@ -1,0 +1,21 @@
+﻿
+
+@{
+    ViewData["Title"] = "CoreSevices Bootcamp - Przesyłanie zamówień";
+}
+
+<h2>Przesyłanie zamówień</h2>
+
+<form method="post" enctype="multipart/form-data" asp-controller="App" asp-action="FilesLoad">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Załaduj jeden lub więcej plików w formacie .json, .xml lub .csv :</p>
+            <input type="file" name="files" multiple />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Prześlij pliki" />
+        </div>
+    </div>
+</form>

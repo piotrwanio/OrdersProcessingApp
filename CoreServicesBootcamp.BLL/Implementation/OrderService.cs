@@ -18,48 +18,58 @@ namespace CoreServicesBootcamp.BLL.Implementation
             _context = context;
         }
 
-        public List<Order> OrdersPriceRange(double min, double max)
+        public OrderDTO OrdersPriceRange(double min, double max)
         {
+            //creating data transfer object
+            OrderDTO orderDTO = new OrderDTO();
+
+            //get orders in price range using LINQ
             List<Order> orders = GetAllOrders().Orders;
-            return (from order in orders
-                    where order.PriceSum >= min && order.PriceSum <= max
+            orderDTO.Orders = (from order in orders
+                    where order.Amount >= min && order.Amount <= max
                     select order).ToList();
+
+            return orderDTO;
         }
 
         public double OrdersAverageAmount()
         {
-            return OrdersTotalAmount() / OrdersCount();
+            if(OrdersCount() != 0)
+                return OrdersTotalAmount() / OrdersCount();
+            return 0;
         }
 
         public double OrdersAverageAmountByClient(int clientId)
         {
-            return OrdersTotalAmountByClient(clientId) / OrdersCountByClient(clientId);
+            if (OrdersCountByClient(clientId) != 0)
+                return OrdersTotalAmountByClient(clientId) / OrdersCountByClient(clientId);
+            return 0;
         }
 
         public double OrdersTotalAmount()
         {
             List<Order> all = GetAllOrders().Orders;
-            double average = 0;
+            double total = 0;
 
             foreach(var req in all)
             {
-                average += req.PriceSum;
+                total += req.Amount;
             }
 
-            return average;
+            return total;
         }
 
         public double OrdersTotalAmountByClient(int clientId)
         {
-            List<Order> all = GetOrdersByClient(clientId);
-            double average = 0;
+            List<Order> all = GetOrdersByClient(clientId).Orders;
+            double total = 0;
 
             foreach (var req in all)
             {
-                average += req.PriceSum;
+                total += req.Amount;
             }
 
-            return average;
+            return total;
         }
 
         public int OrdersCount()
@@ -69,17 +79,20 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
         public int OrdersCountByClient(int clientId)
         {
-            return GetOrdersByClient(clientId).Count();
+            return GetOrdersByClient(clientId).Orders.Count();
         }
 
-        public List<Order> GetOrdersByClient(int clientId)
+        public OrderDTO GetOrdersByClient(int clientId)
         {
-            List<Order> wholeRequests = GetAllOrders().Orders;
+            OrderDTO orderDTO = new OrderDTO();
+            List<Order> orders = GetAllOrders().Orders;
 
-            //return all whole requests for client with id = clientId 
-            return (from r in wholeRequests
-                    where r.ClientId == clientId
-                    select r).ToList();
+            orderDTO.Orders = (from r in orders
+                               where r.ClientId == clientId
+                               select r).ToList();
+
+            //return all orders for client with id = clientId 
+            return orderDTO;
         }
 
         public OrderDTO GetAllOrders()
@@ -109,7 +122,7 @@ namespace CoreServicesBootcamp.BLL.Implementation
                 if (contains.Count() != 0)
                 {
                     contains.First().RequestsList.Add(req);
-                    contains.First().PriceSum += req.Price;
+                    contains.First().Amount += req.Price * req.Quantity;
                 }
                 else
                 {
@@ -118,7 +131,7 @@ namespace CoreServicesBootcamp.BLL.Implementation
                     wholeRequest.RequestId = req.RequestId;
                     wholeRequest.RequestsList = new List<Request>();
                     wholeRequest.RequestsList.Add(req);
-                    wholeRequest.PriceSum += req.Price;
+                    wholeRequest.Amount += req.Price * req.Quantity;
                     orders.Add(wholeRequest);
                 }
             }

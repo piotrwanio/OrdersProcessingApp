@@ -8,6 +8,6 @@ namespace CoreServicesBootcamp.BLL.Interfaces
 {
     public interface IFileService
     {
-        void LoadToDb(IFormFile file);
+        bool LoadToDb(IFormFile file);
     }
 }

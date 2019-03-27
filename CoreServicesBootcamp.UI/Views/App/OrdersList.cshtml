@@ -1,0 +1,141 @@
+﻿@model CoreServicesBootcamp.BLL.Models.OrderDTO
+
+@{
+    ViewData["Title"] = "CoreSevices Bootcamp - Lista zamówień";
+}
+
+@if (ViewBag.Message != null)
+{
+    <h2>@ViewBag.Message</h2>
+}
+else
+{
+
+    <h2>Lista wszystkiech zamówień</h2>
+
+    <p>
+        <a asp-action="FilesLoad">Dodaj zamówienia</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                @if (ViewBag.ClientId != null)
+                {
+                    <th>
+                        @Html.ActionLink("ID Klienta", "ClientOrdersList", new { sortOrder = ViewBag.ClientSortParm, clientId = ViewBag.ClientId })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ID Zamówienia", "ClientOrdersList", new { sortOrder = ViewBag.RequestSortParm, clientId = ViewBag.ClientId })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Kwota Zamówienia", "ClientOrdersList", new { sortOrder = ViewBag.AmountSortParm, clientId = ViewBag.ClientId })
+                    </th>
+                }
+                else if (ViewBag.min != null)
+                {
+                    <th>
+                        @Html.ActionLink("ID Klienta", "OrdersPriceRange", new { sortOrder = ViewBag.ClientSortParm, min = ViewBag.min, max = ViewBag.max })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ID Zamówienia", "OrdersPriceRange", new { sortOrder = ViewBag.RequestSortParm, min = ViewBag.min, max = ViewBag.max })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Kwota Zamówienia", "OrdersPriceRange", new { sortOrder = ViewBag.AmountSortParm, min = ViewBag.min, max = ViewBag.max })
+                    </th>
+                }
+                else
+                {
+                    <th>
+                        @Html.ActionLink("ID Klienta", "AllOrdersList", new { sortOrder = ViewBag.ClientSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("ID Zamówienia", "AllOrdersList", new { sortOrder = ViewBag.RequestSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Kwota Zamówienia", "AllOrdersList", new { sortOrder = ViewBag.AmountSortParm })
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders)
+            {
+                @*<tr> <td><h1>Zamówienie:</h1></td> </tr>*@
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestId)
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                </tr>
+                <tr class="details"> <td>Pozycje z zamówienia:</td> </tr>
+                <tr class="details">
+                    @*<th>
+                            ID Pozycji
+                        </th>*@
+                    <th>
+                        Nazwa produktu
+                    </th>
+                    <th>
+                        Cena
+                    </th>
+                    <th>
+                        Ilość
+                    </th>
+                </tr>
+
+                @foreach (var request in item.RequestsList)
+                {
+                    <tr class="details">
+                        @*<td>
+                                @request.RequestId
+                            </td>*@
+                        <td>
+                            @request.Name
+                        </td>
+                        <td>
+                            @request.Price
+                        </td>
+                        <td>
+                            @request.Quantity
+                        </td>
+                    </tr>
+                }
+                <tr class="border-bottom">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+    @{
+        ViewBag.min = null;
+        ViewBag.max = null;
+        ViewBag.ClientId = null;
+        ViewBag.Message = null;
+    }
+
+    <style>
+        tr.border-bottom td {
+            height: 0;
+            border-bottom: 2px solid grey;
+        }
+
+        tr.details {
+            font-size: 12px;
+        }
+    </style>

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "OrdersQuantity";
+}
+<h2>
+    Ilość zamówień
+    @if (ViewBag.ClientId != null)
+    {
+        <span>
+            dla klienta o id @ViewBag.ClientId
+        </span>
+    }
+    :
+    @ViewBag.NumberOfOrders
+</h2>
+
+@{
+    ViewBag.ClientId = null;
+}

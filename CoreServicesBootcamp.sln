@@ -3,20 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreServicesBootcamp.BLL", "CoreServicesBootcamp.BLL\CoreServicesBootcamp.BLL.csproj", "{3B0747F9-31CF-4742-895D-1483BD5D275A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreServicesBootcamp.BLL", "CoreServicesBootcamp.BLL\CoreServicesBootcamp.BLL.csproj", "{3B0747F9-31CF-4742-895D-1483BD5D275A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{485EC36B-A559-4111-9B61-411F0BD768F8} = {485EC36B-A559-4111-9B61-411F0BD768F8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreServicesBootcamp.UI", "CoreServicesBootcamp.UI\CoreServicesBootcamp.UI.csproj", "{10591518-E3DB-40A2-87D7-02B4CDDA77A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreServicesBootcamp.UI", "CoreServicesBootcamp.UI\CoreServicesBootcamp.UI.csproj", "{10591518-E3DB-40A2-87D7-02B4CDDA77A2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{485EC36B-A559-4111-9B61-411F0BD768F8} = {485EC36B-A559-4111-9B61-411F0BD768F8}
 		{3B0747F9-31CF-4742-895D-1483BD5D275A} = {3B0747F9-31CF-4742-895D-1483BD5D275A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreServicesBootcamp.DAL", "CoreServicesBootcamp.DAL\CoreServicesBootcamp.DAL.csproj", "{485EC36B-A559-4111-9B61-411F0BD768F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreServicesBootcamp.DAL", "CoreServicesBootcamp.DAL\CoreServicesBootcamp.DAL.csproj", "{485EC36B-A559-4111-9B61-411F0BD768F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreServicesBootcamp.UnitTests", "CoreServicesBootcamp.UnitTests\CoreServicesBootcamp.UnitTests.csproj", "{8CC8D177-1AD6-45E6-9B05-8526A30EAD1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreServicesBootcamp.UnitTests", "CoreServicesBootcamp.UnitTests\CoreServicesBootcamp.UnitTests.csproj", "{8CC8D177-1AD6-45E6-9B05-8526A30EAD1C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{10591518-E3DB-40A2-87D7-02B4CDDA77A2} = {10591518-E3DB-40A2-87D7-02B4CDDA77A2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "OrdersTotalAmount";
+}
+@if (ViewBag.TotalAmount != 0)
+{
+    <h2>
+        Całkowita wartość zamówień
+        @if (ViewBag.ClientId != null)
+        {
+            <span>
+                dla klienta o id @ViewBag.ClientId
+            </span>
+        }
+        :
+        @ViewBag.TotalAmount
+    </h2>
+
+
+    ViewBag.ClientId = null;
+
+}
+else
+{
+    <span>Dodaj zamówienia.</span>
+}

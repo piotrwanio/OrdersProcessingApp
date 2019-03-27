@@ -23,10 +23,10 @@ namespace CoreServicesBootcamp.BLL.Implementation
             _context = context;
         }
 
-        public void LoadToDb(IFormFile file)
+        public bool LoadToDb(IFormFile file)
         {
-            RequestRepository repository = new RequestRepository(_context);
-            WholeRequestService wholeRequestService = new WholeRequestService(repository);
+            //RequestRepository repository = new RequestRepository(_context);
+            OrderService orderService = new OrderService(_context);
 
             var result = string.Empty;
 
@@ -39,20 +39,25 @@ namespace CoreServicesBootcamp.BLL.Implementation
             //convert json to list of requests
             var rqst = JsonConvert.DeserializeObject<RequestsJson>(result);
 
-            foreach(RequestJson rq in rqst.Requests)
+            if (rqst != null && rqst.Requests != null)
             {
-                Request request = new Request
+                foreach (RequestJson rq in rqst.Requests)
                 {
-                    ClientId = int.Parse(rq.ClientId),
-                    Name = rq.Name,
-                    Price = Double.Parse(rq.Price, CultureInfo.InvariantCulture),
-                    Quantity = int.Parse(rq.Quantity),
-                    RequestId = long.Parse(rq.RequestId, CultureInfo.InvariantCulture)
-                };
-                repository.AddRequest(request);
+                    Request request = new Request
+                    {
+                        ClientId = int.Parse(rq.ClientId),
+                        Name = rq.Name,
+                        Price = Double.Parse(rq.Price, CultureInfo.InvariantCulture),
+                        Quantity = int.Parse(rq.Quantity),
+                        RequestId = long.Parse(rq.RequestId, CultureInfo.InvariantCulture)
+                    };
+                    _context.Add(request);
+                    _context.SaveChanges();
+                }
+                return true;
             }
 
-            Debug.WriteLine(rqst);
+            return false;
         }
     }
 }

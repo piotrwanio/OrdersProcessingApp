@@ -1,0 +1,38 @@
+﻿@model CoreServicesBootcamp.BLL.Models.ProductDTO
+
+@{
+    ViewData["Title"] = "Ilość zamówień poszczególnych produktów";
+}
+
+@if (ViewBag.Message != null)
+{
+    <h2>@ViewBag.Message</h2>
+}
+else
+{
+    <h2>Ilość zamówień poszczególnych produktów</h2>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nazwa produktu</th>
+                <th>Ilość zamówień</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProductOrders)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@{ 
+    ViewBag.Message = null;
+}

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "OrdersAverageAmount";
+}
+@if(ViewBag.AverageAmount != 0)
+{
+<h2>
+    Średnia wartość zamówienia
+    @if (ViewBag.ClientId != null)
+    {
+        <span>
+            dla klienta o id @ViewBag.ClientId
+        </span>
+    }
+    :
+    @ViewBag.AverageAmount
+</h2>
+
+
+    ViewBag.ClientId = null;
+
+}
+else{ 
+<span>Dodaj zamówienia.</span>
+}
+ 

@@ -1,4 +1,5 @@
 ﻿using CoreServicesBootcamp.DAL.Entities;
+using CoreServicesBootcamp.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,6 +17,7 @@ namespace CoreServicesBootcamp.DAL
         }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
 
@@ -37,6 +39,15 @@ namespace CoreServicesBootcamp.DAL
         {
             // add your own confguration here
             //modelBuilder.Entity<Request>().HasKey(c => new { c.ClientId, c.RequestId }).HasName("IX_MultipleColumns");
+            modelBuilder.Entity<Order>(b =>
+            {
+                b.HasKey(r => r.OrderId);
+                b.Property(r => r.OrderId).ValueGeneratedOnAdd();
+            });
+            modelBuilder.Entity<Request>()
+                .HasOne(s => s.Order)
+                .WithMany()
+                .HasForeignKey(e => e.OrderId);
 
         }
     }

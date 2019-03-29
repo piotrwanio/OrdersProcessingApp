@@ -58,7 +58,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Orders)
+            @foreach (var item in Model.OrdersList)
             {
                 @*<tr> <td><h1>Zamówienie:</h1></td> </tr>*@
 
@@ -94,7 +94,7 @@ else
                     </th>
                 </tr>
 
-                @foreach (var request in item.RequestsList)
+                @foreach (var request in item.Requests)
                 {
                     <tr class="details">
                         @*<td>

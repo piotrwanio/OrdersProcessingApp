@@ -1,5 +1,4 @@
 ﻿using CoreServicesBootcamp.DAL.Entities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,21 +7,19 @@ using System.Text;
 
 namespace CoreServicesBootcamp.DAL.Entities
 {
-    public class Request
+    //represents all request rows in client's request
+    public class Order
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [ForeignKey("Request")]
         public int OrderId { get; set; }
 
         public int ClientId { get; set; }
         public long RequestId { get; set; }
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public double Price { get; set; }
+        public double Amount { get; set; }
+        
 
-        public virtual Order Order { get; set; }
+        [NotMapped]
+        public virtual List<Request>  Requests { get; set; }
     }
-    
 }

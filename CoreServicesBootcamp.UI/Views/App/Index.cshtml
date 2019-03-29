@@ -9,32 +9,32 @@
     function OrdersTotalAmountByClient() {
         var clientId = $("#clientList").val(); //Get selected clientId
 
-        window.location = "@Url.Action("OrdersTotalAmountByClient", "App", new {})"+"?clientId="+clientId; 
+        window.location = "@Url.Action("OrdersTotalAmountByClient", "Order", new {})"+"?clientId="+clientId; 
     }
 
     function OrdersAverageAmountByClient() {
         var clientId = $("#clientList").val(); //Get selected clientId
 
-        window.location = "@Url.Action("OrdersAverageAmountByClient", "App", new {})"+"?clientId="+clientId; 
+        window.location = "@Url.Action("OrdersAverageAmountByClient", "Order", new {})"+"?clientId="+clientId; 
     }
 
     function OrdersPriceRange() {
         var min = $("#min").val(); //Get min value
         var max = $("#max").val(); //Get max value
 
-        window.location = "@Url.Action("OrdersPriceRange", "App", new {})" + "?min=" + min + "&max=" + max; 
+        window.location = "@Url.Action("OrdersPriceRange", "Order", new {})" + "?min=" + min + "&max=" + max; 
     }
 
     function ClientOrdersList() {
         var clientId = $("#clientList").val(); //Get selected clientId
         if (clientId != null)
-        window.location = "@Url.Action("ClientOrdersList", "App", new {})"+"?clientId="+clientId; 
+        window.location = "@Url.Action("ClientOrdersList", "Order", new {})"+"?clientId="+clientId; 
     }
 
     function ClientOrdersQuantity() {
         var clientId = $("#clientList").val(); //Get selected clientId
         if (clientId != null)
-        window.location = "@Url.Action("ClientOrdersQuantity", "App", new {})"+"?clientId="+clientId; 
+        window.location = "@Url.Action("ClientOrdersQuantity", "Order", new {})"+"?clientId="+clientId; 
     }
 
 </script>
@@ -43,22 +43,22 @@
 
 <div class="row">
     <div class="col-md-6 margin-top-20">
-        <a href="@Url.Action("AllOrdersList","App")" class="btn btn-primary btn-large btn-block">
+        <a href="@Url.Action("AllOrdersList","Order")" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Lista zamówień
         </a>
-        <a href="@Url.Action("OrdersQuantity","App", new { })" class="btn btn-primary btn-large btn-block">
+        <a href="@Url.Action("OrdersQuantity","Order", new { })" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Ilość zamówień
         </a>
-        <a href="@Url.Action("ProductOrdersNumber","App", new { })" class="btn btn-primary btn-large btn-block">
+        <a href="@Url.Action("ProductOrdersNumber","Order", new { })" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Ilość pozycji zamówień po produktach
         </a>
     </div>
 
     <div class="col-md-6 margin-top-20">
-        <a href="@Url.Action("OrdersAverageAmount","App", new { })" class="btn btn-primary btn-large btn-block">
+        <a href="@Url.Action("OrdersAverageAmount","Order", new { })" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Średnia wartość zamówienia
         </a>
-        <a href="@Url.Action("OrdersTotalAmount","App", new { })" class="btn btn-primary btn-large btn-block">
+        <a href="@Url.Action("OrdersTotalAmount","Order", new { })" class="btn btn-primary btn-large btn-block">
             <span class="glyphicon glyphicon-print"></span>Łączna kwota zamówień
         </a>
         <button onclick="OrdersPriceRange()" class="btn btn-primary btn-large btn-block">

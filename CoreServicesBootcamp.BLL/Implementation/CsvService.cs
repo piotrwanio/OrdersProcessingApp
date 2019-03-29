@@ -12,6 +12,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Linq;
+using CoreServicesBootcamp.DAL.Entities;
+using Order = CoreServicesBootcamp.DAL.Entities.Order;
 
 namespace CoreServicesBootcamp.BLL.Implementation
 {
@@ -22,7 +25,10 @@ namespace CoreServicesBootcamp.BLL.Implementation
         public CsvService(RequestContext context)
         {
             _context = context;
+            FileExtension = FileExtension.Csv;
         }
+
+        public FileExtension FileExtension { get; }
 
         public bool LoadToDb(IFormFile file)
         {
@@ -48,7 +54,30 @@ namespace CoreServicesBootcamp.BLL.Implementation
                             Quantity = int.Parse(rq.Quantity),
                             RequestId = long.Parse(rq.Request_id, CultureInfo.InvariantCulture)
                         };
-                        _context.Add(request);
+
+                        var order = _context.Orders.Where(m => m.ClientId == request.ClientId
+                         && m.RequestId == request.RequestId);
+
+                        if (order.Count() != 0)
+                        {
+                            request.Order = order.First();
+                            order.First().Amount += request.Price * request.Quantity;
+                        }
+                        else
+                        {
+                            var newOrder = new Order
+                            {
+                                ClientId = request.ClientId,
+                                RequestId = request.RequestId,
+                                Amount = request.Price * request.Quantity
+                            };
+                            _context.Orders.Add(newOrder);
+                            _context.SaveChanges();
+                            request.Order = newOrder;
+
+                        }
+
+                        _context.Requests.Add(request);
                         _context.SaveChanges();
                     }
                     return true;

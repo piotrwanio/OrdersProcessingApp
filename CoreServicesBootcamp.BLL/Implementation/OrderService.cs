@@ -6,10 +6,12 @@ using System.Linq;
 using CoreServicesBootcamp.BLL.Models;
 using CoreServicesBootcamp.DAL.Entities;
 using CoreServicesBootcamp.DAL;
+using CoreServicesBootcamp.BLL.Interfaces;
+using OrderBLL = CoreServicesBootcamp.BLL.Models.OrderBLL;
 
 namespace CoreServicesBootcamp.BLL.Implementation
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private RequestContext _context;
 
@@ -24,8 +26,8 @@ namespace CoreServicesBootcamp.BLL.Implementation
             OrderDTO orderDTO = new OrderDTO();
 
             //get orders in price range using LINQ
-            List<Order> orders = GetAllOrders().Orders;
-            orderDTO.Orders = (from order in orders
+            List<Order> orders = GetAllOrders().OrdersList;
+            orderDTO.OrdersList = (from order in orders
                     where order.Amount >= min && order.Amount <= max
                     select order).ToList();
 
@@ -48,7 +50,7 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
         public double OrdersTotalAmount()
         {
-            List<Order> all = GetAllOrders().Orders;
+            List<Order> all = GetAllOrders().OrdersList;
             double total = 0;
 
             foreach(var req in all)
@@ -61,7 +63,7 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
         public double OrdersTotalAmountByClient(int clientId)
         {
-            List<Order> all = GetOrdersByClient(clientId).Orders;
+            List<Order> all = GetOrdersByClient(clientId).OrdersList;
             double total = 0;
 
             foreach (var req in all)
@@ -74,20 +76,20 @@ namespace CoreServicesBootcamp.BLL.Implementation
 
         public int OrdersCount()
         {
-            return GetAllOrders().Orders.Count();
+            return GetAllOrders().OrdersList.Count();
         }
 
         public int OrdersCountByClient(int clientId)
         {
-            return GetOrdersByClient(clientId).Orders.Count();
+            return GetOrdersByClient(clientId).OrdersList.Count();
         }
 
         public OrderDTO GetOrdersByClient(int clientId)
         {
             OrderDTO orderDTO = new OrderDTO();
-            List<Order> orders = GetAllOrders().Orders;
+            List<Order> orders = GetAllOrders().OrdersList;
 
-            orderDTO.Orders = (from r in orders
+            orderDTO.OrdersList = (from r in orders
                                where r.ClientId == clientId
                                select r).ToList();
 
@@ -98,38 +100,22 @@ namespace CoreServicesBootcamp.BLL.Implementation
         public OrderDTO GetAllOrders()
         {
             OrderDTO orderDTO = new OrderDTO();
-            List<Order> orders = new List<Order>();
 
-            var allFromRepo = _context.Requests.Where(m => true).ToList();
+            var requests = _context.Requests.Where(m => true).ToList();
+            var orders = _context.Orders.Where(m => true).ToList();
 
-            foreach(var req in allFromRepo)
+            //add requests to each order
+            foreach(var order in orders)
             {
-                var contains = (from r in orders
-                                where r.ClientId == req.ClientId
-                                && r.RequestId == req.RequestId
-                                select r);
-                if (contains.Count() != 0)
-                {
-                    contains.First().RequestsList.Add(req);
-                    contains.First().Amount += req.Price * req.Quantity;
-                }
-                else
-                {
-                    Order wholeRequest = new Order();
-                    wholeRequest.ClientId = req.ClientId;
-                    wholeRequest.RequestId = req.RequestId;
-                    wholeRequest.RequestsList = new List<Request>();
-                    wholeRequest.RequestsList.Add(req);
-                    wholeRequest.Amount += req.Price * req.Quantity;
-                    orders.Add(wholeRequest);
-                }
+                List<Request> requestsList = (from r in requests
+                                              where r.Order.OrderId == order.OrderId
+                                              select r).ToList();
+                if (order.Requests == null) order.Requests = new List<Request>();
+                order.Requests.AddRange(requestsList);
             }
 
-            orderDTO.Orders = orders;
+            orderDTO.OrdersList = orders;
             return orderDTO;
         }
-
-
-
     }
 }

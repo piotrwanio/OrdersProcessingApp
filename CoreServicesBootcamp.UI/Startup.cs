@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreServicesBootcamp.BLL.Implementation;
+using CoreServicesBootcamp.BLL.Interfaces;
 using CoreServicesBootcamp.DAL;
 using CoreServicesBootcamp.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +45,13 @@ namespace CoreServicesBootcamp.UI
                     //options.UseSqlServer(connection);
                     options.UseInMemoryDatabase(databaseName: "Add_writes_to_database");
                     });
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IFileStrategy, FileStrategy>();
+            services.AddScoped<IFileService, JsonService>();
+            services.AddScoped<IFileService, XmlService>();
+            services.AddScoped<IFileService, CsvService>();
+
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

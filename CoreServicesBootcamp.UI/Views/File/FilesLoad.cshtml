@@ -1,0 +1,52 @@
+﻿<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('#fileselected').val(fileName);
+        });
+    });
+</script>
+
+@{
+    ViewData["Title"] = "CoreSevices Bootcamp - Przesyłanie zamówień";
+}
+
+<h2>Przesyłanie zamówień</h2>
+
+<form style="overflow: auto" method="post" enctype="multipart/form-data" asp-controller="File" asp-action="FilesLoad">
+    <p>Załaduj jeden lub więcej plików w formacie .json, .xml lub .csv :</p>
+
+    <div class="col-md-4 input-group">
+        <div class="input-group-btn">
+            <input  id="fileselected" readonly="readonly" placeholder="Nie wybrano pliku" class="form-control" name="filename" type="text" />
+
+            <label for="files" class="btn btn-default">Wybierz pliki</label>
+            <input id="files" type="file" class="btn btn-default" name="files" style="visibility:hidden;" multiple>
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <input class="btn btn-default" type="submit" value="Prześlij pliki" />
+    </div>
+
+</form>
+
+@if(ViewBag.SuccessCount != null)
+{
+<div>Załadowano @ViewBag.SuccessCount plików.</div>
+@if(ViewBag.WasFailure != null)
+    {
+<div>Nieprawidłowy format któregoś z plików lub zamówienia.</div>
+    }
+}
+
+<style>
+    [hidden] {
+        display: none !important;
+    }
+</style>
+

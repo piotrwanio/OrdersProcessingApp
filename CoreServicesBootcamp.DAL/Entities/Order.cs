@@ -10,6 +10,7 @@ namespace CoreServicesBootcamp.DAL.Entities
     //represents all request rows in client's request
     public class Order
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [ForeignKey("Request")]
         public int OrderId { get; set; }
@@ -18,8 +19,6 @@ namespace CoreServicesBootcamp.DAL.Entities
         public long RequestId { get; set; }
         public double Amount { get; set; }
         
-
-        [NotMapped]
         public virtual List<Request>  Requests { get; set; }
     }
 }

@@ -42,8 +42,18 @@ namespace CoreServicesBootcamp.BLL.Implementation
                 result = reader.ReadToEnd();
             }
 
+            RequestsJson rqst;
+
             //convert json to list of requests
-            var rqst = JsonConvert.DeserializeObject<RequestsJson>(result);
+            try
+            {
+                rqst = JsonConvert.DeserializeObject<RequestsJson>(result);
+            }
+            catch(JsonReaderException exception)
+            {
+                Debug.WriteLine(exception.Message);
+                return false;
+            }
 
             if (rqst != null && rqst.Requests != null)
             {
@@ -51,11 +61,11 @@ namespace CoreServicesBootcamp.BLL.Implementation
                 {
                     Request request = new Request
                     {
-                        ClientId = int.Parse(rq.ClientId),
-                        Name = rq.Name,
-                        Price = Double.Parse(rq.Price, CultureInfo.InvariantCulture),
-                        Quantity = int.Parse(rq.Quantity),
-                        RequestId = long.Parse(rq.RequestId, CultureInfo.InvariantCulture)
+                        ClientId = int.Parse(rq.ClientId ?? ""),
+                        Name = rq.Name ?? "",
+                        Price = Double.Parse(rq.Price ?? "", CultureInfo.InvariantCulture),
+                        Quantity = int.Parse(rq.Quantity ?? ""),
+                        RequestId = long.Parse(rq.RequestId ?? "", CultureInfo.InvariantCulture)
                     };
 
                     var order = _context.Orders.Where(m => m.ClientId == request.ClientId
@@ -74,8 +84,7 @@ namespace CoreServicesBootcamp.BLL.Implementation
                             RequestId = request.RequestId,
                             Amount = request.Price * request.Quantity
                         };
-                        _context.Orders.Add(newOrder);
-                        _context.SaveChanges();
+                        _context.Add(newOrder);
 
                         request.Order = newOrder;
                     }

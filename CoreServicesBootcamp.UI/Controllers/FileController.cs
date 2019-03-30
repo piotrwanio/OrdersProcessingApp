@@ -25,24 +25,31 @@ namespace CoreServicesBootcamp.UI.Controllers
         [HttpPost]
         public ActionResult FilesLoad(List<IFormFile> files)
         {
+            bool loadSucceeded = false;
+            int successCount = 0;
+
             foreach (var file in files)
             {
                 //load file to db using correct strategy
                 switch (file.ContentType)
                 {
                     case "application/json":
-                        _fileStrategy.LoadToDb(file, FileExtension.Json);
+                        loadSucceeded = _fileStrategy.LoadToDb(file, FileExtension.Json);
                         break;
                     case "application/vnd.ms-excel":
-                        _fileStrategy.LoadToDb(file, FileExtension.Csv);
+                        loadSucceeded = _fileStrategy.LoadToDb(file, FileExtension.Csv);
                         break;
                     case "text/xml":
-                        _fileStrategy.LoadToDb(file, FileExtension.Xml);
+                        loadSucceeded = _fileStrategy.LoadToDb(file, FileExtension.Xml);
                         break;
                     default:
+                        loadSucceeded = false;
                         return View();
                 }
+                if (loadSucceeded == true) successCount++;
+                else ViewBag.WasFailure = true;
             }
+            ViewBag.SuccessCount = successCount;
             return View();
         }
     }

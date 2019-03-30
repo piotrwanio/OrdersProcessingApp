@@ -17,6 +17,5 @@ namespace CoreServicesBootcamp.BLL.Interfaces
         int OrdersCountByClient(int clientId);
         OrderDTO GetOrdersByClient(int clientId);
         OrderDTO GetAllOrders();
-
     }
 }

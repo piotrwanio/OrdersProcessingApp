@@ -6,6 +6,12 @@
 
 <script>
 
+    function ProdNrOfOrdersByClient() {
+        var clientId = $("#clientList").val(); //Get selected clientId
+
+        window.location = "@Url.Action("ProductOrdersNrByClient", "Order", new {})"+"?clientId="+clientId; 
+    }
+
     function OrdersTotalAmountByClient() {
         var clientId = $("#clientList").val(); //Get selected clientId
 
@@ -27,13 +33,11 @@
 
     function ClientOrdersList() {
         var clientId = $("#clientList").val(); //Get selected clientId
-        if (clientId != null)
         window.location = "@Url.Action("ClientOrdersList", "Order", new {})"+"?clientId="+clientId; 
     }
 
     function ClientOrdersQuantity() {
         var clientId = $("#clientList").val(); //Get selected clientId
-        if (clientId != null)
         window.location = "@Url.Action("ClientOrdersQuantity", "Order", new {})"+"?clientId="+clientId; 
     }
 
@@ -66,7 +70,10 @@
         </button>
     </div>
 </div>
-Wartość zamówienia od: <input type="number" id="min"/> do <input type="number" id="max"/>
+
+<div style="margin-top: 10px">
+    Wartość zamówienia od: <input type="number" min="0" id="min" /> do <input type="number" min="0" id="max" />
+</div>
 
 
 
@@ -97,13 +104,13 @@ Wartość zamówienia od: <input type="number" id="min"/> do <input type="number
         </button>
     </div>
 </div>
-@*<div style="margin-top: 10px">
+<div style="margin-top: 10px">
     <div class="col-md-12 margin-top-20">
-        <a href="@Url.Action("Index","App", new { })" class="btn btn-primary btn-large btn-block">
-            <span class="glyphicon glyphicon-print"></span>Ilość pozycji zamówień pogrupowanych po nazwie
-        </a>
+        <button onclick="ProdNrOfOrdersByClient()" class="btn btn-primary btn-large btn-block">
+            <span class="glyphicon glyphicon-print"></span>Ilość zamówień po produktach
+        </button>
     </div>
-</div>*@
+</div>
 
 
 

@@ -16,12 +16,10 @@ namespace CoreServicesBootcamp.UI.Controllers
     public class AppController : Controller
     {
         private readonly IOrderService _orderService;
-        private readonly RequestContext _context;
 
-        public AppController(IOrderService orderService, RequestContext context)
+        public AppController(IOrderService orderService)
         {
             _orderService = orderService;
-            _context = context;
         }
 
         public IActionResult Index()

@@ -13,12 +13,12 @@ namespace CoreServicesBootcamp.UI.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
-        private readonly RequestContext _context;
+        private readonly IProductService _productService;
 
-        public OrderController(IOrderService orderService, RequestContext context)
+        public OrderController(IOrderService orderService, IProductService productService)
         {
             _orderService = orderService;
-            _context = context;
+            _productService = productService;
         }
 
         public IActionResult OrdersTotalAmount()
@@ -111,11 +111,18 @@ namespace CoreServicesBootcamp.UI.Controllers
             return View("OrdersList", ordersDTO);
         }
 
+        public IActionResult ProductOrdersNrByClient(int clientId)
+        {
+            ProductDTO products = _productService.GetProdNrOfOrdersByClient(clientId);
+
+            if (products.ProductOrders.Count == 0) ViewBag.Message = "Brak zamówień";
+
+            return View("ProductOrdersNumber", products);
+        }
+
         public IActionResult ProductOrdersNumber()
         {
-            ProductService productService = new ProductService(_context);
-
-            ProductDTO products = productService.GetProductsOrders();
+            ProductDTO products = _productService.GetProductsNumberOfOrders();
 
             if (products.ProductOrders.Count == 0) ViewBag.Message = "Brak zamówień";
 

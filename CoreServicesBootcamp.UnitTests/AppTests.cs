@@ -17,6 +17,8 @@ using CoreServicesBootcamp.BLL.Interfaces;
 using CoreServicesBootcamp.BLL.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc;
+using CoreServicesBootcamp.UI.Models;
 
 namespace CoreServicesBootcamp.UnitTests
 {
@@ -24,9 +26,45 @@ namespace CoreServicesBootcamp.UnitTests
     public class AppTests
     {
         [TestMethod]
-        public void Index_Contains_All_Requests()
+        public void Index_Contains_All_Clients()
         {
+            //preparation - creating imitation of OrderService
+            Mock<IOrderService> mock = new Mock<IOrderService>();
+            mock.Setup(m => m.GetAllOrders()).Returns(new OrderDTO
+            {
+                OrdersList = new List<Order>
+                {
+                    new Order
+                    {
+                        OrderId = 1,
+                        ClientId = 1,
+                        RequestId = 1,
+                        Requests = new List<Request>()
+                    },
+                    new Order
+                    {
+                        OrderId = 2,
+                        ClientId = 2,
+                        RequestId = 1,
+                        Requests = new List<Request>()
+                    }
+                }
+            });
+            
+            //preparation - creating controller
+            AppController appController = new AppController(mock.Object);
 
+            //action - calling tested method
+            ViewResult result = (ViewResult)appController.Index();
+
+            //get client viewmodel from viewdata
+            ClientsViewModel clients = (ClientsViewModel)result.ViewData.Model;
+
+            //assert - check if client quantity is equal 2
+            Assert.AreEqual(2, clients.ClientList.Count);
+            //asserts - check dropdown list values
+            Assert.AreEqual("1", clients.ClientList[0].Value);
+            Assert.AreEqual("2", clients.ClientList[1].Value);
         }
 
         [TestMethod]
@@ -85,6 +123,12 @@ namespace CoreServicesBootcamp.UnitTests
 
         [TestMethod]
         public void Can_Get_Number_Of_Product_Orders()
+        {
+
+        }
+
+        [TestMethod]
+        public void Can_Get_Number_Of_Product_Orders_By_Client()
         {
 
         }

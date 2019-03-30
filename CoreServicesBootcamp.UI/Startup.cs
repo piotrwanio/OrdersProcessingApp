@@ -46,6 +46,7 @@ namespace CoreServicesBootcamp.UI
                     options.UseInMemoryDatabase(databaseName: "Add_writes_to_database");
                     });
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFileStrategy, FileStrategy>();
             services.AddScoped<IFileService, JsonService>();
             services.AddScoped<IFileService, XmlService>();

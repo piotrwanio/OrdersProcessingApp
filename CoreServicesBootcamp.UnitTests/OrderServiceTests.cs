@@ -310,19 +310,176 @@ namespace CoreServicesBootcamp.UnitTests
         [TestMethod]
         public void Can_Get_Orders_Total_Amount()
         {
+            //create db context
+            using (var context = new RequestContext(CreateNewContextOptions()))
+            {
+                //create requests to add to db
+                Request request1 = new Request
+                {
+                    Id = 2222,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 1,
+                    Name = "product1"
+                };
+                Request request2 = new Request
+                {
+                    Id = 3333,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 2,
+                    ClientId = 22,
+                    Name = "product2"
+                };
+                Request request3 = new Request
+                {
+                    Id = 3334,
+                    Price = 20,
+                    Quantity = 12,
+                    RequestId = 1,
+                    ClientId = 22,
+                    Name = "product3"
+                };
 
+                //create orders to add to db
+                Order order1 = new Order
+                {
+                    OrderId = 1,
+                    ClientId = request1.ClientId,
+                    RequestId = request1.RequestId,
+                    Amount = request1.Price * request1.Quantity
+                };
+                Order order2 = new Order
+                {
+                    OrderId = 2,
+                    ClientId = request2.ClientId,
+                    RequestId = request2.RequestId,
+                    Amount = request2.Price * request2.Quantity
+                };
+                Order order3 = new Order
+                {
+                    OrderId = 3,
+                    ClientId = request3.ClientId,
+                    RequestId = request3.RequestId,
+                    Amount = request3.Price * request3.Quantity
+                };
+
+
+                //assignment orders to requests
+                request1.Order = order1;
+                request2.Order = order2;
+                request3.Order = order3;
+
+                //add requests and orders to database
+                context.Requests.Add(request1);
+                context.Requests.Add(request2);
+                context.Requests.Add(request3);
+                context.Orders.Add(order1);
+                context.Orders.Add(order2);
+                context.Orders.Add(order3);
+
+                context.SaveChanges();
+
+                //create tested service
+                var service = new OrderService(context);
+
+                //action - call tested method
+                double ordersTotalAmnt = service.OrdersTotalAmount();
+
+                //assert - is total amount of orders equal 260
+                Assert.AreEqual((double)260, ordersTotalAmnt);
+            }
         }
 
         [TestMethod]
         public void Can_Get_Client_Orders_Total_Amount()
         {
+            //create db context
+            using (var context = new RequestContext(CreateNewContextOptions()))
+            {
+                //create requests to add to db
+                Request request1 = new Request
+                {
+                    Id = 2222,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 1,
+                    Name = "product1"
+                };
+                Request request2 = new Request
+                {
+                    Id = 3333,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 2,
+                    ClientId = 5,
+                    Name = "product2"
+                };
+                Request request3 = new Request
+                {
+                    Id = 3334,
+                    Price = 20,
+                    Quantity = 12,
+                    RequestId = 1,
+                    ClientId = 5,
+                    Name = "product3"
+                };
 
+                //create orders to add to db
+                Order order1 = new Order
+                {
+                    OrderId = 1,
+                    ClientId = request1.ClientId,
+                    RequestId = request1.RequestId,
+                    Amount = request1.Price * request1.Quantity
+                };
+                Order order2 = new Order
+                {
+                    OrderId = 2,
+                    ClientId = request2.ClientId,
+                    RequestId = request2.RequestId,
+                    Amount = request2.Price * request2.Quantity
+                };
+                Order order3 = new Order
+                {
+                    OrderId = 3,
+                    ClientId = request3.ClientId,
+                    RequestId = request3.RequestId,
+                    Amount = request3.Price * request3.Quantity
+                };
+
+                //assignment orders to requests
+                request1.Order = order1;
+                request2.Order = order2;
+                request3.Order = order3;
+
+                //add requests and orders to database
+                context.Requests.Add(request1);
+                context.Requests.Add(request2);
+                context.Requests.Add(request3);
+                context.Orders.Add(order1);
+                context.Orders.Add(order2);
+                context.Orders.Add(order3);
+
+                context.SaveChanges();
+
+                //create tested service
+                var service = new OrderService(context);
+
+                //action - call tested method
+                double ordersTotalAmntByClient = service.OrdersTotalAmountByClient(5);
+
+                //assert - is client's total amount of orders equal 250
+                Assert.AreEqual((double)250, ordersTotalAmntByClient);
+            }
         }
 
         [TestMethod]
         public void Can_Get_Orders_Average_Amount()
         {
-                  //create db context
+            //create db context
             using (var context = new RequestContext(CreateNewContextOptions()))
             {
                 //create requests to add to db
@@ -407,25 +564,146 @@ namespace CoreServicesBootcamp.UnitTests
         [TestMethod]
         public void Can_Get_Client_Orders_Average_Amount()
         {
+            //create db context
+            using (var context = new RequestContext(CreateNewContextOptions()))
+            {
+                //create requests to add to db
+                Request request1 = new Request
+                {
+                    Id = 2222,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 1,
+                    Name = "product1"
+                };
+                Request request2 = new Request
+                {
+                    Id = 3333,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 2,
+                    ClientId = 22,
+                    Name = "product2"
+                };
+                Request request3 = new Request
+                {
+                    Id = 3334,
+                    Price = 20,
+                    Quantity = 12,
+                    RequestId = 1,
+                    ClientId = 22,
+                    Name = "product3"
+                };
 
+                //create orders to add to db
+                Order order1 = new Order
+                {
+                    OrderId = 1,
+                    ClientId = request1.ClientId,
+                    RequestId = request1.RequestId,
+                    Amount = request1.Price * request1.Quantity
+                };
+                Order order2 = new Order
+                {
+                    OrderId = 2,
+                    ClientId = request2.ClientId,
+                    RequestId = request2.RequestId,
+                    Amount = request2.Price * request2.Quantity
+                };
+                Order order3 = new Order
+                {
+                    OrderId = 3,
+                    ClientId = request3.ClientId,
+                    RequestId = request3.RequestId,
+                    Amount = request3.Price * request3.Quantity
+                };
+
+
+                //assignment orders to requests
+                request1.Order = order1;
+                request2.Order = order2;
+                request3.Order = order3;
+
+                //add requests and orders to database
+                context.Requests.Add(request1);
+                context.Requests.Add(request2);
+                context.Requests.Add(request3);
+                context.Orders.Add(order1);
+                context.Orders.Add(order2);
+                context.Orders.Add(order3);
+
+                context.SaveChanges();
+
+                //create tested service
+                var service = new OrderService(context);
+
+                //action - call tested method
+                double ordersAvrgAmnt = service.OrdersAverageAmountByClient(22);
+
+                //assert - is average amount of client's orders equal 250/3
+                Assert.AreEqual((double)250 / (double)2, ordersAvrgAmnt);
+            }
         }
 
         [TestMethod]
         public void Can_Get_Orders_Price_Range()
         {
+            //preparation - create new dbcontext with in-memory db
+            using (var context = new RequestContext(CreateNewContextOptions()))
+            {
+                Request request = new Request
+                {
+                    Id = 1111,
+                    Price = 10,
+                    Quantity = 1,
+                    RequestId = 1,
+                    ClientId = 111,
+                    Name = "product1"
+                };
 
-        }
+                Order order = new Order
+                {
+                    OrderId = 1,
+                    ClientId = request.ClientId,
+                    RequestId = request.RequestId,
+                    Amount = request.Price * request.Quantity
+                };
+                Order order2 = new Order
+                {
+                    OrderId = 2,
+                    ClientId = 3,
+                    RequestId = 3,
+                    Amount = 71
+                };
+                Order order3 = new Order
+                {
+                    OrderId = 3,
+                    ClientId = 3, 
+                    RequestId = 1,
+                    Amount = 70
+                };
+                request.Order = order;
 
-        [TestMethod]
-        public void Can_Get_Nr_Of_Product_Ordrs()
-        {
+                //adding order to db
+                context.Requests.Add(request);
+                context.Orders.Add(order);
+                context.Orders.Add(order2);
+                context.Orders.Add(order3);
 
-        }
 
-        [TestMethod]
-        public void Can_Get_Nr_Of_Product_Ordrs_By_Client()
-        {
+                context.SaveChanges();
 
+                var service = new OrderService(context);
+                List<Order> orders = service.OrdersPriceRange(0, 70).OrdersList;
+
+                //assert - is quantity of price range orders equal 1 
+                Assert.AreEqual(2, orders.Count);
+                //assert - check correct of insert data
+                Assert.AreEqual(1, orders[0].OrderId);
+                Assert.AreEqual(3, orders[1].OrderId);
+
+            }
         }
 
         private static DbContextOptions<RequestContext> CreateNewContextOptions()

@@ -2,7 +2,6 @@
 using CoreServicesBootcamp.BLL.Models;
 using CoreServicesBootcamp.DAL;
 using CoreServicesBootcamp.DAL.Entities;
-using CoreServicesBootcamp.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;

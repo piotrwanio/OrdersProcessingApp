@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CoreServicesBootcamp.BLL.Implementation;
 using CoreServicesBootcamp.BLL.Interfaces;
 using CoreServicesBootcamp.DAL;
-using CoreServicesBootcamp.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +38,7 @@ namespace CoreServicesBootcamp.UI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=CoreServicesBootcamp;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<RequestContext>
                 (options => {
                     //options.UseSqlServer(connection);
@@ -54,9 +53,6 @@ namespace CoreServicesBootcamp.UI
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddTransient<RequestRepository>();
-
 
         }
 

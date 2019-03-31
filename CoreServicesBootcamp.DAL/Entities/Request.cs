@@ -14,14 +14,16 @@ namespace CoreServicesBootcamp.DAL.Entities
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int OrderId { get; set; }
-
+        [MaxLength(6)]
         public int ClientId { get; set; }
         public long RequestId { get; set; }
+
+        [MaxLength(255)]
         public string Name { get; set; }
         public int Quantity { get; set; }
         public double Price { get; set; }
 
+        public int OrderId { get; set; }
         public virtual Order Order { get; set; }
     }
     

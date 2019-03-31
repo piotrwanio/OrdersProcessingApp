@@ -37,7 +37,17 @@ namespace CoreServicesBootcamp.BLL.Implementation
             //convert xml to list of requests
             XmlSerializer serializer = new XmlSerializer(typeof(RequestsXml));
 
-            RequestsXml requests = (RequestsXml)serializer.Deserialize(reader);
+            RequestsXml requests;
+
+            try
+            {
+                requests = (RequestsXml)serializer.Deserialize(reader);
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+
             reader.Close();
 
             if (requests != null && requests.Requests != null)

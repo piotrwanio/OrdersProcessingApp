@@ -44,7 +44,7 @@ namespace CoreServicesBootcamp.UI.Controllers
                         break;
                     default:
                         loadSucceeded = false;
-                        return View();
+                        break;
                 }
                 if (loadSucceeded == true) successCount++;
                 else ViewBag.WasFailure = true;

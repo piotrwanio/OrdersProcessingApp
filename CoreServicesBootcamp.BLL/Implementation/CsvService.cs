@@ -39,7 +39,22 @@ namespace CoreServicesBootcamp.BLL.Implementation
             {
                 csv.Configuration.Delimiter = ",";
 
-                var records = csv.GetRecords<RequestCsv>();
+                List<RequestCsv> records = null;
+
+                try
+                {
+                    records = csv.GetRecords<RequestCsv>().ToList();
+                }
+                catch(HeaderValidationException exception)
+                {
+                    Debug.WriteLine(exception.Message);
+                    return false;
+                }
+                catch(Exception exception)
+                {
+                    Debug.WriteLine(exception.Message);
+                    return false;
+                }
 
                 //add converted requests to database
                 if (records != null)

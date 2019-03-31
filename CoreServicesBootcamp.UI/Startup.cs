@@ -39,7 +39,7 @@ namespace CoreServicesBootcamp.UI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=CoreServicesBootcamp;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<RequestContext>
                 (options => {
                     //options.UseSqlServer(connection);

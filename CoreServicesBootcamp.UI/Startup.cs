@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CoreServicesBootcamp.BLL.Implementation;
 using CoreServicesBootcamp.BLL.Interfaces;
 using CoreServicesBootcamp.DAL;
-using CoreServicesBootcamp.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,9 +53,6 @@ namespace CoreServicesBootcamp.UI
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            services.AddTransient<RequestRepository>();
-
 
         }
 

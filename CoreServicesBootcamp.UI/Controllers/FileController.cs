@@ -46,9 +46,12 @@ namespace CoreServicesBootcamp.UI.Controllers
                         loadSucceeded = false;
                         break;
                 }
+                //incrementation of success load counter
                 if (loadSucceeded == true) successCount++;
+                //if not success - wasFailure flag on
                 else ViewBag.WasFailure = true;
             }
+            //pass success counter to View
             ViewBag.SuccessCount = successCount;
             return View();
         }
